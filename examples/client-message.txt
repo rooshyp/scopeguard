@@ -1,0 +1,1 @@
+The site is looking great. Could you also add a shop with ten products, a cart, and Stripe checkout before launch?

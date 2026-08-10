@@ -1,0 +1,17 @@
+§1 Project
+Design and build a five-page informational website for Northstar Studio.
+
+§2 Deliverables
+The project includes exactly five pages: Home, About, Services, Work, and Contact. Deliverables include responsive layouts, supplied-copy placement, and a working contact form.
+
+§3 Revisions
+Two consolidated revision rounds are included. A revision changes an approved deliverable and does not add a new feature or page.
+
+§4 Exclusions
+E-commerce, payment processing, product catalog setup, and ongoing content entry are not included.
+
+§5 Schedule
+Final delivery is due October 18, subject to the client providing consolidated feedback within two business days of each review.
+
+§6 Payment
+A 50% deposit is due before work begins. The remaining 50% is due at final delivery.

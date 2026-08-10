@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="Compare a client request with a signed SOW, classify its scope, and draft a professional reply."
+    >
+    <meta name="theme-color" content="#f4f1e8">
+    <title>ScopeGuard — Know what you are saying yes to</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" type="module"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Skip to scope review</a>
+
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label="ScopeGuard home">
+        <span class="wordmark-mark" aria-hidden="true"><span></span></span>
+        <span>ScopeGuard</span>
+      </a>
+      <div class="header-actions">
+        <span class="privacy-note"><span aria-hidden="true">●</span> No request history</span>
+        <button class="button button-quiet" id="new-review" type="button">New review</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">SOW scope check</p>
+        <h1 id="page-title">Know what you’re saying <em>yes</em> to.</h1>
+        <p class="hero-copy">
+          Compare the latest client ask with the signed agreement, find the relevant boundary,
+          and leave with a reply you can send.
+        </p>
+        <div class="operational-note">
+          <span aria-hidden="true">i</span>
+          <p>An operational drafting aid—not legal advice. Review the source agreement before sending.</p>
+        </div>
+      </section>
+
+      <section class="workspace" id="workspace" aria-label="Scope review workspace">
+        <form class="input-panel" id="scope-form" novalidate>
+          <div class="panel-heading">
+            <div>
+              <p class="step-label">01 · Source material</p>
+              <h2>What was agreed?</h2>
+            </div>
+            <button class="text-button" id="load-example" type="button">
+              Load example
+              <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+
+          <div class="field-group">
+            <div class="field-heading">
+              <label for="sow">Signed contract or SOW</label>
+              <label class="file-trigger" for="sow-file">
+                <span aria-hidden="true">＋</span> Import .txt or .md
+              </label>
+              <input id="sow-file" type="file" accept=".txt,.md,text/plain,text/markdown">
+            </div>
+            <p class="field-hint" id="sow-hint">
+              Include deliverables, schedule, revision limits, exclusions, and payment terms.
+            </p>
+            <textarea
+              id="sow"
+              name="sow"
+              rows="13"
+              maxlength="80000"
+              required
+              aria-describedby="sow-hint sow-count"
+              placeholder="Paste the signed agreement here…"
+              spellcheck="true"
+            ></textarea>
+            <div class="field-meta">
+              <span id="sow-error" class="field-error" aria-live="polite"></span>
+              <span id="sow-count">0 / 80,000</span>
+            </div>
+          </div>
+
+          <div class="divider" aria-hidden="true"><span></span></div>
+
+          <div class="field-group">
+            <div class="field-heading">
+              <label for="client-message">Incoming client message</label>
+              <span class="required-note">Required</span>
+            </div>
+            <p class="field-hint" id="message-hint">
+              Paste the exact email, Slack message, or chat request.
+            </p>
+            <textarea
+              id="client-message"
+              name="client_message"
+              rows="7"
+              maxlength="10000"
+              required
+              aria-describedby="message-hint message-count"
+              placeholder="Paste the client’s latest request here…"
+              spellcheck="true"
+            ></textarea>
+            <div class="field-meta">
+              <span id="message-error" class="field-error" aria-live="polite"></span>
+              <span id="message-count">0 / 10,000</span>
+            </div>
+          </div>
+
+          <div class="form-error" id="form-error" role="alert" hidden></div>
+
+          <div class="form-actions">
+            <button class="button button-primary" id="analyze-button" type="submit" disabled>
+              <span class="button-label">Check scope</span>
+              <span class="button-arrow" aria-hidden="true">→</span>
+              <span class="spinner" aria-hidden="true"></span>
+            </button>
+            <p>
+              Your text is sent only to the configured model provider for this analysis. It is not
+              stored by this app.
+            </p>
+          </div>
+        </form>
+
+        <section class="result-panel" id="result-panel" aria-labelledby="result-title">
+          <div class="empty-result" id="empty-result">
+            <div class="empty-illustration" aria-hidden="true">
+              <span class="page-shape page-back"></span>
+              <span class="page-shape page-front">
+                <i></i><i></i><i></i><b>?</b>
+              </span>
+            </div>
+            <p class="step-label">02 · Scope assessment</p>
+            <h2 id="result-title">Your review will appear here.</h2>
+            <p>
+              Add the agreement and client message. ScopeGuard will return a conservative
+              classification, grounded reasoning, and a ready-to-edit reply.
+            </p>
+            <ul class="result-preview" aria-label="The analysis includes">
+              <li><span aria-hidden="true">01</span> Clear classification</li>
+              <li><span aria-hidden="true">02</span> Supporting SOW clauses</li>
+              <li><span aria-hidden="true">03</span> Client-ready response</li>
+            </ul>
+          </div>
+
+          <div class="result-content" id="result-content" hidden>
+            <div class="result-topline">
+              <div>
+                <p class="step-label">02 · Scope assessment</p>
+                <h2 id="decision-title" tabindex="-1">Review complete</h2>
+              </div>
+              <span class="classification-badge" id="classification-badge"></span>
+            </div>
+
+            <div class="result-section reasoning-section">
+              <p class="result-label">Reasoning</p>
+              <p id="reasoning"></p>
+            </div>
+
+            <div class="result-section" id="citations-section">
+              <div class="result-label-row">
+                <p class="result-label">Supporting clauses</p>
+                <span id="citation-count"></span>
+              </div>
+              <div class="citations" id="citations"></div>
+            </div>
+
+            <div class="result-section reply-section">
+              <div class="result-label-row">
+                <label class="result-label" for="draft-reply">Draft reply</label>
+                <span class="editable-note">Editable</span>
+              </div>
+              <textarea id="draft-reply" rows="7" maxlength="1500"></textarea>
+              <div class="reply-actions">
+                <button class="button button-secondary" id="copy-reply" type="button">
+                  <span aria-hidden="true">⧉</span>
+                  <span class="copy-label">Copy reply</span>
+                </button>
+                <button class="text-button" id="copy-assessment" type="button">
+                  Copy full assessment
+                </button>
+              </div>
+            </div>
+
+            <p class="result-disclaimer">
+              Check the cited language and any amendments before relying on this assessment.
+            </p>
+          </div>
+
+          <div class="loading-result" id="loading-result" aria-hidden="true" hidden>
+            <div class="loading-orbit"><span></span></div>
+            <p>Checking the request against the agreement…</p>
+            <span>This can take a few moments.</span>
+          </div>
+        </section>
+      </section>
+
+      <p class="live-status" id="live-status" aria-live="polite" aria-atomic="true"></p>
+    </main>
+
+    <footer>
+      <p>ScopeGuard <span>·</span> Built for clear boundaries and better client conversations.</p>
+      <a href="https://github.com/rooshyp/scope-compliance-assistant">View source on GitHub</a>
+    </footer>
+
+    <noscript>
+      <div class="noscript-message">JavaScript is required to run the scope checker.</div>
+    </noscript>
+  </body>
+</html>

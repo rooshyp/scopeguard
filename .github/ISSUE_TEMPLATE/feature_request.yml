@@ -1,0 +1,30 @@
+name: Feature request
+description: Suggest a focused product or policy improvement.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: Please use synthetic examples and explain the conservative behavior you expect.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem should this change solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Include boundary cases and expected classifications when relevant.
+    validations:
+      required: true
+  - type: dropdown
+    id: data
+    attributes:
+      label: Data confirmation
+      options:
+        - I confirm this request contains synthetic data only.
+    validations:
+      required: true
